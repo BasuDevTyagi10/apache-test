@@ -19,6 +19,11 @@ public class AWSRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:test")
+            .to("seda:asyncProcess") // Send to seda endpoint for async processing
+            .log("Response from async process: ${body}");
+
+        from("seda:asyncProcess")
+            .log("Starting async process")
             .to("aws2-s3://my-local-bucket-1?operation=listObjects")
             .convertBodyTo(List.class)
             .log("Listing S3 objects: ${body}")
