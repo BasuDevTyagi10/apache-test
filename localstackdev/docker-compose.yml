@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"  # Gateway for all services
+      - "4572:4572"  # S3
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=C:\\localstack\\data
+    volumes:
+      - "C:\\localstack:/var/lib/localstack"
